@@ -1,0 +1,34 @@
+ def undue(**kwargs):
+        query = '''select "Customer Name", "Invoice Date", "Due Date", date_dif from custom_reportt '''
+        conn=kwargs['engine'].connect()
+        df=pd.read_sql(query, conn)
+        df.dropna(inplace=True)
+        conn.close()  
+        return df.to_dict(orient='records')     
+
+    def undue_plot(**kwargs):   
+        query = '''select "Customer Name", "Invoice Date", "Due Date", cast(date_dif as integer) from custom_reportt '''
+        conn=kwargs['engine'].connect()
+        df=pd.read_sql(query, conn)
+        df['Discount'] = np.where(df['date_dif']<=30,True, False)
+        
+        conn.close()  
+        return df.to_dict(orient='records')  
+
+    def customer(**kwargs):   
+        query = '''select "Customer Name", "Invoice Date", "Due Date", cast("Due Days" as integer), cast("Outstanding Amount" as float) , cast(date_dif as integer) from custom_reportt '''
+        conn=kwargs['engine'].connect()
+        df=pd.read_sql(query, conn)
+        df=df.loc[(df['Outstanding Amount'] >500000.00) & (df['Due Days'] >30)]
+        conn.close()  
+        return df.to_dict(orient='records')  
+    def average(**kwargs):
+        query = ''' select distinct(client_name),invoice_date, due_date from ks_outstanding order by client_name, invoice_date desc '''
+        conn=kwargs['engine'].connect()
+        df=pd.read_sql(query, conn)
+        df.fillna(0,inplace=True)
+        df['Idate']=pd.to_datetime(df['invoice_date'])
+        df['Ddate']=pd.to_datetime(df['due_date'])
+        df['avg_days']=(df['Ddate']-df['Idate']).dt.days
+        conn.close()
+        return df.to_dict(orient='records')
