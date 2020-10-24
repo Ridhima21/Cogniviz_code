@@ -1,0 +1,6 @@
+ def loan(**kwargs):
+            
+        df = pd.DataFrame({"client_name" : ["Shyam","Aman","Ritika","Manish","Shubhankar","Aashish","Ratan","Deepak","Karan","Prateek"],"Loan Account No." : ["000100100000085","000100100000087","000100100125667","000100100000698","000100100001296","000100100001272","000100100071291","000100100001996","000100100001106","000100100000096"],"Total Collection Amount" : [12390,12410,34567,98467,23576,67345,14652,52198,77210,99430],"Interest" : [2390,2410,4597,8467,3576,7345,4652,2198,7210,9430],"Due Collection Date" : ["24 APR 2017","20 APR 2017","20 APR 2017","20 APR 2017","20 APR 2017","30 APR 2018","20 MAR 2017","20 APR 2017","20 MAY 2017","10 APR 2017"],"Forecasted Collection Days" : [40,68,56,31,78,43,62,25,34,47]})
+            
+            
+        return df.to_dict(orient='records')
