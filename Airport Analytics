@@ -1,0 +1,66 @@
+ def flight(**kwargs):
+            
+        df=pd.DataFrame({"Flight Number" : ["AA-2341","AI-437","AI-238","VI-4462","BA-597","VA-672","SJ-221","GO-9521","CX-490","EM-2468","VA-379","LA-252","BA-781","AK-442","SJ-942","QR-0481","AF-741","AI-590","VI-8921","EM-5710"],
+        "Airlines": ["American Airlines","Air India","Air India","Vistara","British Airways","Virgin Atlantic","SpiceJet","IndiGo Airlines","Cathay Pacific","Emirates","Vistara","Lufthansa","British Airways","Air Asia","SpiceJet","Qatar Airways","Air France","Air India","Vistara","Emirates"],
+        "Origin City": ["New Delhi","New Delhi","New York","Ahemdabad","Paris","Singpore","New Delhi","New Delhi","Bangkok","New Delhi","Hyderabad","New Delhi","New Delhi","Shanghai","Chandigarh","New Delhi","New Delhi","Malaysia","New Delhi","Doha"],
+        "Destination City": ["London","Mumbai","New Delhi","New Delhi","New Delhi","New Delhi","Bangalore","Chennai","New Delhi","Dubai","New Delhi","Berlin","Manchester","New Delhi","New Delhi","Kuwait","Paris","New Delhi","Goa","New Delhi"],
+        "Origin Country": ["India","India","United States of America","India","France","Singapore","India","India","Thailand","India","India","India","India","China","India","India","India","Malaysia","India","Qatar"],
+        "Destination Country": ["United Kingdom","India","India","India","India","India","India","India","India","UAE","India","Germany","United Kingdom","India","India","Kuwait","France","India","India","India"],
+        "Departure Time": ["1300","1445","0245","1855","0745","1425","1935","0145","0525","2345","2105","0620","1735","1045","2240","0745","1820","0725","1205","1035",],"Arrival Time":["2230","1705","0905","2305","1705","1755","2355","1005","1105","0645","0525","1205","2205","1705","0425","1435","0100","1355","1550","1845"],
+        "No. of passengers": [230,150,215,130,190,185,160,210,250,300,145,178,189,265,239,150,290,310,221,240],
+        "Distance Travelled": [2475,810,500,450,1099,2140,780,980,1077,3056,905,1455,1789,2047,951,2890,1720,786,4915,4000],
+        "Air Time": [421,165,230,490,580,190,320,160,500,240,560,170,225,168,330,245,290,430,415,275],
+        "Flight Status": ["On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time","Delayed","On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time","Delayed","On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time"],"Delayed flights": [42,12,32,13,38,25,19,22,44,32,15,25,13,32,24,29,33,15,34,21],"On-time Flights": [41,22,36,29,39,22,38,30,24,23,24,28,27,30,36,22,27,44,30,28]})
+        return df.to_dict(orient='records')
+
+    def flight1(**kwargs):
+            
+        df=pd.DataFrame({"Flight Number" : ["AA-2341","AI-437","AI-238","VI-4462","BA-597","VA-672","SJ-221","GO-9521","CX-490","EM-2468","VA-379","LA-252","BA-781","AK-442","SJ-942","QR-0481","AF-741","AI-590","VI-8921","EM-5710"],
+        "Airlines": ["American Airlines","Air India","Air India","Vistara","British Airways","Virgin Atlantic","SpiceJet","IndiGo Airlines","Cathay Pacific","Emirates","Vistara","Lufthansa","British Airways","Air Asia","SpiceJet","Qatar Airways","Air France","Air India","Vistara","Emirates"],
+        "Origin City": ["New Delhi","New Delhi","New York","Ahemdabad","Paris","Singpore","New Delhi","New Delhi","Bangkok","New Delhi","Hyderabad","New Delhi","New Delhi","Shanghai","Chandigarh","New Delhi","New Delhi","Malaysia","New Delhi","Doha"],
+        "Destination City": ["London","Mumbai","New Delhi","New Delhi","New Delhi","New Delhi","Bangalore","Chennai","New Delhi","Dubai","New Delhi","Berlin","Manchester","New Delhi","New Delhi","Kuwait","Paris","New Delhi","Goa","New Delhi"],
+        "Origin Country": ["India","India","United States of America","India","France","Singapore","India","India","Thailand","India","India","India","India","China","India","India","India","Malaysia","India","Qatar"],
+        "Destination Country": ["United Kingdom","India","India","India","India","India","India","India","India","UAE","India","Germany","United Kingdom","India","India","Kuwait","France","India","India","India"],
+        "Departure Time": ["1300","1445","0245","1855","0745","1425","1935","0145","0525","2345","2105","0620","1735","1045","2240","0745","1820","0725","1205","1035",],"Arrival Time":["2230","1705","0905","2305","1705","1755","2355","1005","1105","0645","0525","1205","2205","1705","0425","1435","0100","1355","1550","1845"],
+        "No. of passengers": [230,150,215,130,190,185,160,210,250,300,145,178,189,265,239,150,290,310,221,240],
+        "Distance Travelled": [2475,810,500,450,1099,2140,780,980,1077,3056,905,1455,1789,2047,951,2890,1720,786,4915,4000],
+        "Air Time": [421,165,230,490,580,190,320,160,500,240,560,170,225,168,330,245,290,430,415,275],
+        "Flight_Status": ["On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time","Delayed","On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time","Delayed","On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time"],"Delayed flights": [42,12,32,13,38,25,19,22,44,32,15,25,13,32,24,29,33,15,34,21],"On-time Flights": [41,22,36,29,39,22,38,30,24,23,24,28,27,30,36,22,27,44,30,28]})
+
+        return df[['Airlines','Delayed flights','On-time Flights']].to_dict(orient='records')
+     
+    def flight2(**kwargs):
+        query = '''select destination_type, count(*) as c FROM airportt GROUP BY destination_type'''
+        conn=kwargs['engine'].connect()
+        df=pd.read_sql(query, conn)
+        
+        conn.close()  
+        return df.to_dict(orient='records')
+        return df[['destination_type', 'c']].to_dict(orient='records')
+
+
+    def flight3(**kwargs):
+        query = '''select no_of_passengers,destination_type FROM airportt GROUP BY no_of_passengers,destination_type'''
+        conn=kwargs['engine'].connect()
+        df=pd.read_sql(query, conn)
+        
+        conn.close()  
+        return df.to_dict(orient='records')
+        return df[['no_of_passengers','destination_type']].to_dict(orient='records')   
+
+
+    def flight4(**kwargs):
+            
+        df=pd.DataFrame({"Flight Number" : ["AA-2341","AI-437","AI-238","VI-4462","BA-597","VA-672","SJ-221","GO-9521","CX-490","EM-2468","VA-379","LA-252","BA-781","AK-442","SJ-942","QR-0481","AF-741","AI-590","VI-8921","EM-5710"],
+        "Airlines": ["American Airlines","Air India","Air India","Vistara","British Airways","Virgin Atlantic","SpiceJet","IndiGo Airlines","Cathay Pacific","Emirates","Vistara","Lufthansa","British Airways","Air Asia","SpiceJet","Qatar Airways","Air France","Air India","Vistara","Emirates"],
+        "Origin City": ["New Delhi","New Delhi","New York","Ahemdabad","Paris","Singpore","New Delhi","New Delhi","Bangkok","New Delhi","Hyderabad","New Delhi","New Delhi","Shanghai","Chandigarh","New Delhi","New Delhi","Malaysia","New Delhi","Doha"],
+        "Destination City": ["London","Mumbai","New Delhi","New Delhi","New Delhi","New Delhi","Bangalore","Chennai","New Delhi","Dubai","New Delhi","Berlin","Manchester","New Delhi","New Delhi","Kuwait","Paris","New Delhi","Goa","New Delhi"],
+        "Origin Country": ["India","India","United States of America","India","France","Singapore","India","India","Thailand","India","India","India","India","China","India","India","India","Malaysia","India","Qatar"],
+        "Destination Country": ["United Kingdom","India","India","India","India","India","India","India","India","UAE","India","Germany","United Kingdom","India","India","Kuwait","France","India","India","India"],
+        "Departure Time": ["1300","1445","0245","1855","0745","1425","1935","0145","0525","2345","2105","0620","1735","1045","2240","0745","1820","0725","1205","1035",],"Arrival Time":["2230","1705","0905","2305","1705","1755","2355","1005","1105","0645","0525","1205","2205","1705","0425","1435","0100","1355","1550","1845"],
+        "No. of passengers": [230,150,215,130,190,185,160,210,250,300,145,178,189,265,239,150,290,310,221,240],
+        "Distance Travelled": [2475,810,500,450,1099,2140,780,980,1077,3056,905,1455,1789,2047,951,2890,1720,786,4915,4000],
+        "Air Time": [421,165,230,490,580,190,320,160,500,240,560,170,225,168,330,245,290,430,415,275],
+        "Flight_Status": ["On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time","Delayed","On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time","Delayed","On-Time","Delayed","On-Time","Cancelled","On-Time","On-Time"],"Delayed flights": [42,12,32,13,38,25,19,22,44,32,15,25,13,32,24,29,33,15,34,21],"On-time Flights": [41,22,36,29,39,22,38,30,24,23,24,28,27,30,36,22,27,44,30,28]})
+
+        return df[['Airlines','Distance Travelled']].to_dict(orient='records')
